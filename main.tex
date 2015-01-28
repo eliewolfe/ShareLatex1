@@ -1,0 +1,136 @@
+\documentclass[preliminary,copyright,creativecommons,american]{eptcs}%switch a draft to preliminary or submission
+\providecommand{\event}{QPL 2015} % Name of the event you are submitting to
+%\usepackage{breakurl}             % Not needed if you use pdflatex only.
+
+\usepackage{savesym}
+%\usepackage{iopams}  
+\savesymbol{eqalign}
+\expandafter\let\csname equation*\endcsname\relax 
+\expandafter\let\csname endequation*\endcsname\relax
+\usepackage{nccmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\newtheoremstyle{lemeq}% name
+{\abovedisplayskip }% Space above
+{\belowdisplayskip}% Space below
+{}% Body font
+{}% Indent amount
+{\bfseries}% Theorem head font
+{:}% Punctuation after theorem head
+{\parindent}% Space after theorem head
+{\thmname{#1} \thmnumber{\normalfont (#2)} \thmnote{\normalfont#3}}% Theorem head spec (can be left empty, meaning ‘normal’)
+\theoremstyle{lemeq}
+\newtheorem{theo}{Theorem}
+%\newtheorem{thm}[theo]{Theorem}
+\newtheorem{prop}[theo]{Proposition} 
+\newtheorem{lemma}[equation]{Lemma}
+\newtheorem{defin}{Definition}
+
+
+%\usepackage{MnSymbol}
+%\savesymbol{amalg}
+%\usepackage{mathabx}
+
+
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{ultramarine}{RGB}{63, 0, 255}
+\definecolor{medblue}{RGB}{0, 0, 100}
+\definecolor{panblue}{RGB}{0,24,150}
+\definecolor{carmine}{RGB}{150, 0, 24}
+
+\hypersetup{colorlinks,
+%linkcolor=RoyalBlue,
+linkcolor=medblue,
+%citecolor=OrangeRed,
+citecolor=carmine,
+%urlcolor=BlueViolet,
+urlcolor=panblue,
+anchorcolor=OliveGreen}
+
+\usepackage[square,comma,numbers,nonamebreak,sort&compress,merge]{natbib}
+
+\usepackage{underscore}
+\usepackage[utf8]{inputenc}
+\usepackage[OT1]{fontenc}
+\usepackage{lmodern}
+%\usepackage[english]{babel}
+\usepackage{microtype}
+
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{placeins} %for FloatBarrier
+
+\usepackage[format=plain,font=footnotesize,skip=8pt,labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+%\usepackage{tabulary}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{J}{>{\justifying\arraybackslash}X}
+
+\usepackage{ragged2e}%for justifying text in tables
+
+
+\newcommand{\half}[1]{\nicefrac{#1}{2}}
+\newcommand{\brackets}[1]{\lbrace{#1\rbrace}}
+
+\newcommand{\ceq}[1]{Eq.\,(\ref{#1})}
+\newcommand{\fig}[1]{Fig.\,\ref{#1}}
+\newcommand{\tab}[1]{Table\,\ref{#1}}
+
+\begin{document}
+
+\title{Quick PPT conditions for GDS states}
+\author{Elie Wolfe\thanks{
+ORCID: \href[pdfnewwindow]{http://orcid.org/0000-0002-6960-3796}{0000-0002-6960-3796}, 
+ResearchID: \href[pdfnewwindow]{http://www.researcherid.com/rid/F-7888-2014}{F-7888-2014}, 
+ScopusID: \href[pdfnewwindow]{http://www.scopus.com/inward/authorDetails.url?authorID=55324585900&partnerID=MN8TOARS}{55324585900}
+}
+\institute{Perimeter Institute for Theoretical Physics\thanks{Research at Perimeter Institute is supported by the Government of Canada through Industry Canada and by the Province of Ontario through the Ministry of Economic Development and Innovation.}\\
+Waterloo, Ontario, Canada, N2L 2Y5}
+\email{\href[pdfnewwindow]{mailto:ewolfe@perimeterinstitute.ca}{ewolfe@perimeterinstitute.ca}}
+%\and
+%Co Author \qquad\qquad Yet S. Else
+%\institute{Stanford Univeristy\\California, USA}
+%\email{\quad is@gmail.com \quad\qquad somebody@else.org}
+}
+\def\titlerunning{GDS PPT}
+\def\authorrunning{E. Wolfe}
+
+
+
+%\subjclass[2010]{Primary: 62F15; Secondary: 62B10}
+
+\maketitle
+
+\begin{abstract}
+We show stuff.
+\end{abstract}
+
+{\small PACS: 89.70.-a, 02.50.Tt, 02.10.Ox \hfill 2010 \textit{AMS Classification}: 62F15, 62B10}
+
+
+\section{Introduction}
+Various algorithms exists to study the causal structures compatible with a set of conditional independence (CI) relations \cite{pearl2009causality,spirtes2011causation,Lauritzen1990independence,studeny2005probabilistic}. A set CI relations does not aways include enough information about a probability distribution to exclude the distribution's compatibility with a given causal structure . Particularly well-studied examples include the instrumental scenario \cite{pearl2009causality}, the quantum nonlocality \cite{spekkens2012causal,pusey2014gdag,hardyinference} and the triangle scenario \cite{fritz2012bell,steudel2010ancestors}. Entropic inequalities \cite{chaves2012entropic,fritz2013marginal,chaves2014novel} are a common tool to sift through causal structures more sensitively than independence relation testing, but the entropic approach is also not fully sufficient \cite{fritz2012bell,hardyinference}.
+
+
+
+
+Moreover, it is occasionally the case that a genuine causal structure, typically represented in the form of a directed acyclic graph (DAG), fails to convey certain CI relations which exist in the probability distribution  it represents. Such scenarios display ``fine tuning'' \cite{spekkens2012causal}, or are known as ``unfaithful" \cite{spirtes2011causation} or ``unstable" \cite{pearl2009causality}. An example of such a distribution is the cryptographic Vernam cipher or One-Time-Pad \cite{vernam1926cipher,singh2000code,safavi2008onetimepad}, in which a completely-random binary-string secret-key K is summed modulo two with a binary-string plaintext P in order to output the cyphertext C. In this case C is a function of, or causally dependant on, both K and P. The causal structure of such a cipher is represented by the DAG in \fig{fig:vernamstructure}. The DAG, however, only implies (unconditional) independence between P and K. However since K is uniformly random, there C and P are \emph{also} statistically independent. This is precisely the cyptographic value, namely that learning C teaches nothing about P. However this independence vanishes if one has access the the secret key. Indeed, with the secret key K one can recover P given C. Thus while the Vernam cipher probability distribution obeys both $(P\perp K\text{ })$ and $(P\perp C)$, only the first relation is inferable from the DAG using the Causal Markov condition \cite{pearl2009causality,spekkens2012causal}. The Causal Markov condition states that 
+\begin{defin}
+Causal Markov condition: In a directed acyclic graph, representing causal structure, every variable $X_i$ is conditionally independent with respect to any of its nondescendants given its parents, ie. $\left(X_i \perp X_j \mid \operatorname{Par}[X_i]\right), \text{ whenever }X_j\in\operatorname{NonDesc}[X_i]$.
+\end{defin}
+ 
+
+
+
+
+\nocite{*}
+\bibliographystyle{apsrev4mod}
+\bibliography{samplebib}
+\end{document}
